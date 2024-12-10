@@ -15,7 +15,10 @@ router.post('/register',[
 ],
 usercon.registeruser
 )
-
+router.post('/login',[
+    body('email').isEmail().withMessage('invalid email'),
+    body('password').isLength({min:6}).withMessage('password must be more than six latters')
+],usercon.login)
 
 
 
