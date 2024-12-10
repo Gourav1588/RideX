@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 
-     mongoose.connect('mongodb://127.0.0.1:27017/test');
+     mongoose.connect('mongodb+srv://gouravyadav89603:Gourav%402002@cluster0.gkdru.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
     console.log("voneec")
   
-    // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 
