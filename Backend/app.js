@@ -6,6 +6,9 @@ const app=express()
 const main=require('./db/db')
 app.use(express.json())
 const userRoute=require('./routes/user.routes')
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 
 app.use(cors())
 
