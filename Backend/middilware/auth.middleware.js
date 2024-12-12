@@ -11,8 +11,6 @@ module.exports.authuser = async (req, res, next) => {
             return res.status(401).json({ message: "Token is required" });
         }
         const isblack= await  blacklistTokenModel.findOne({token:token})
-        console.log(isblack)
-
         if(isblack){
             res.status(404).json({message:"first sign in"})
         }

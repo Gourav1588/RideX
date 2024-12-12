@@ -6,6 +6,7 @@ const app=express()
 const main=require('./db/db')
 app.use(express.json())
 const userRoute=require('./routes/user.routes')
+const captainroutes=require("./routes/captain.routes")
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
@@ -16,5 +17,7 @@ app.get('/',(req,res)=>{
     res.send('hello')
 })
 app.use('/users',userRoute)
+app.use('/captains',captainroutes)
+
 
 module.exports =app;
