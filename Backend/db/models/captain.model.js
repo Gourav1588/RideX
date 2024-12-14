@@ -68,7 +68,22 @@ captainSchema.methods.generateToken = function () {
 captainSchema.statics.hashPassword = async function (password) {
     return await bcrypt.hash(password, 10);
   };
-  
+//   captainSchema.methods.comparePassword=async (password)=> {
+// return await bcrypt.compare(password,this.password)
+
+    
+//   }
+
+  captainSchema.methods.comparePassword = async function (password) {
+    try {
+        // Compare the provided password with the stored hashed password
+        const isMatch = await bcrypt.compare(password, this.password);
+        return isMatch; // Return the result of the comparison (true/false)
+    } catch (err) {
+        // Handle potential errors (e.g., if bcrypt fails)
+        throw new Error('Error comparing passwords');
+    }
+};
 
 const CaptainModel = mongoose.model('Captain', captainSchema);
 module.exports = CaptainModel;

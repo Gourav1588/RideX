@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router();
 const {body}=require("express-validator")
 const captaincon=require("../controlers/captain.con")
-
+const captainauth=require("../middilware/auth.middleware")
 router.post('/register',  [
     body('email').isEmail().withMessage("Invalid email"),
     body('fullname.firstname')
@@ -30,6 +30,16 @@ router.post('/register',  [
   ],
 
   captaincon.register)
+
+  router.post('/login',
+//     body('email').isEmail().withMessage(" enter valid email pass"),
+//     body ('password').isLength({ min: 3 })
+//     .withMessage("Plate must be greater than 4 characters"),
+//   ],
+  captaincon.login
+)
+router.get('/profile',captainauth.authcaptain,captaincon.getprofile)
+router.post("/logout",captaincon.logout)
 
 
 
