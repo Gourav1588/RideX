@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link, useViewTransitionState } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { userDataContext } from '../context/Context'
+import axios from 'axios'
 
-const UserSignup = () => {
+const UserSignup =  () => {
   const[email,setEmail]=useState('')
   const[password,setPassword]=useState('')
   const [firstname,setfirstname]=useState('')
@@ -11,7 +13,7 @@ const UserSignup = () => {
 
 
 
-const submitHandler=(e)=>{
+const submitHandler= async(e)=>{
   e.preventDefault()
   
   setEmail('')
@@ -19,16 +21,17 @@ const submitHandler=(e)=>{
   setfirstname('')
   setlastname('')
 
-  setuserdata({
-    username:{
+const newuser={
+       fullName:{
       firstname:firstname,
       lastname:lastname
     },
     password:password,
     email:email
-  })
-  console.log(userdata);
-  
+  }
+
+  const response= await axios.post("http://localhost:3000/users/register",newuser)
+  console.log(response)
 }
   
   return (

@@ -24,7 +24,7 @@ const submitHandler=(e)=>{
   setlastname('')
 
   setuserdata({
-    username:{
+    fullName:{
       firstname:firstname,
       lastname:lastname
     },

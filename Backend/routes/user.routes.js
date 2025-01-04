@@ -8,7 +8,7 @@ const auth=require('../middilware/auth.middleware')
 
 router.post('/register',[
     body('email').isEmail().withMessage("invalid email"),
-    body('fullname.firstname').isLength({min:3}).withMessage("first name must me more than three latters"),
+    body('fullname.firstname').isLength({min:3}).withMessage("first name must me more than three159 latters"),
     body('password').isLength({min:6}).withMessage("password must be more than 6 latters")
 
 

@@ -6,10 +6,10 @@ const blacklistToken=require('../db/models/blacklistToken.model')
 module.exports.registeruser=async(req,res,next)=>{
  
     
-    const error = validationResult(req); // Store the result of validation
-    if (!error.isEmpty()) {
-        return res.status(400).json({ errors: error.array() }); // Reference 'error', not 'errors'
-    }
+    // const error = validationResult(req); // Store the result of validation
+    // if (!error.isEmpty()) {
+    //     return res.status(400).json({ errors: error.array() }); // Reference 'error', not 'errors'
+    // }
     
     const {fullname,email,password}=req.body
     const userall=userModel.findOne({email})
