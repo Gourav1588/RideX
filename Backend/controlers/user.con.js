@@ -12,9 +12,9 @@ module.exports.registeruser=async(req,res,next)=>{
     // }
     
     const {fullname,email,password}=req.body
-    const userall=userModel.findOne({email})
+    const userall= await userModel.findOne({email})
     if(userall){
-        res.status(400).json({message:"user all exist"})
+        return  res.status(400).json({message:"user all exist"})
     }
 
     const hashedpassword=await userModel.hashPassword(password);
@@ -29,7 +29,8 @@ module.exports.registeruser=async(req,res,next)=>{
 
     // console.log(user)
 const token=user.generateAuthToken();
-res.status(201).json({ token, user });
+ return res.status(201).json({ token, user });
+
 
 
 }
@@ -51,8 +52,8 @@ if(!ismatch){
     return res.status(401).json({message:'invalid email or pass'})
 }
 const token =user.generateAuthToken();
-res.cookie('token',token);
-res.status(200).json({token,user})
+// res.cookie('token',token);
+ return res.status(201).json({token,user})
 
 }
 module.exports.getprofile=async(req,res,next)=>{
