@@ -6,10 +6,10 @@ const blacklistToken=require("../db/models/blacklistToken.model")
 
 module.exports.register=async(req,res,next)=>{
 
-    const error = validationResult(req); // Store the result of validation
-    if (!error.isEmpty()) {
-        return res.status(400).json({ errors: error.array() }); // Reference 'error', not 'errors'
-    }
+    // const error = validationResult(req); // Store the result of validation
+    // if (!error.isEmpty()) {
+    //     return res.status(400).json({ errors: error.array() }); // Reference 'error', not 'errors'
+    // }
 
 const {fullname,email,password,vehicle}=req.body;
 
@@ -36,7 +36,7 @@ const captain=await captainservice.createCaptain({
 })
 
 const token=captain.generateToken();
-res.status(200).json({token,captain})
+  return res.status(201).json({token,captain})
 }
 
 module.exports.login=async(req,res)=>{
@@ -58,13 +58,19 @@ if(!comparePassword){
 
 const token =captain.generateToken ();
 // res.cookie('token',token);
-res.cookie('token',token)
-res.status(200).json({token,captain})
+
+ return res.status(201).json({token,captain})
 
 }
+
+
+
 module.exports.getprofile=async(req,res,next)=>{
     res.status(200).json(req.captain)
 }
+
+
+
 module.exports.logout = async (req, res) => {
     
     res.clearCookie('token');

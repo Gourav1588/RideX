@@ -42,10 +42,6 @@ const newuser={
     localStorage.setItem('token',data.token)
     navigate('/Home')
 
-
-
-
-
   }
 }
   

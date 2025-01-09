@@ -1,39 +1,39 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { userDataContext } from '../context/Context';
+import CaptainContext, { captainData } from '../context/CaptainContext';
 
-const UserProtectWrapper = ({ children }) => {
+const CaptainProtectWrapper = ({ children }) => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  const { user, setuser } = useContext(userDataContext);
+  const { captain, setCaptain } = useContext(captainData);
 
   useEffect(() => {
     if (!token) {
       console.log('No token found, redirecting...');
-      navigate('/login');
+      navigate('/captain-login');
       return;
     }
 
     // Direct API call inside useEffect
-    axios.get('http://localhost:3000/users/profile', {
+    axios.get('http://localhost:3000/captains/profile', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
     .then(response => {
       if (response.status === 200) {
-        setuser(response.data.user);  // Set the user data
-        navigate('/Home');
+        setCaptain(response.data.captain);  // Set the user data
+        navigate('/captain-Home');
       }
     })
     .catch(err => {
       console.error('Error fetching user profile:', err);
-      navigate('/login');
+      navigate('/captain-login');
     });
-  }, [token, navigate, setuser]);  // Dependencies for useEffect
+  }, [token, navigate, setCaptain]);  // Dependencies for useEffect
 
   return <>{children}</>;
 };
 
-export default UserProtectWrapper;
+export default CaptainProtectWrapper;

@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { captainData } from '../context/CaptainContext'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom' 
+import CaptainHome from './CaptainHome'
+import Home from './Home'
 
 const CaptainSignup = () => {
 
@@ -11,27 +16,48 @@ const[email,setEmail]=useState('')
   const[password,setPassword]=useState('')
   const [firstname,setfirstname]=useState('')
   const [lastname,setlastname]=useState('')
-  const [userdata,setuserdata]=useState()
+  const [vehiclecolor,setvehiclecolor]=useState("")
+  const [vehicleplate,setvehicleplate]=useState("")
+  const [vehiclecapecity,setvehicapecity]=useState("")
+  const [vehicletype,setvehicletype]=useState("")
+ const {captain,setCaptain} =useContext(captainData)
+
+const navigate=useNavigate()
 
 
-
-const submitHandler=(e)=>{
+const submitHandler= async(e)=>{
   e.preventDefault()
   
-  setEmail('')
-  setPassword('')
-  setfirstname('')
-  setlastname('')
 
-  setuserdata({
-    fullName:{
+
+  const captainData={
+    fullname:{
       firstname:firstname,
       lastname:lastname
     },
     password:password,
-    email:email
-  })
-  console.log(userdata);
+    email:email,
+    vehicle:{
+      color:vehiclecolor,
+      plate:vehicleplate,
+      capecity:vehiclecapecity,
+      vehicleType:vehicletype
+    }
+  }
+ const response=await axios.post("http://localhost:3000/captains/register",captainData)
+ if(response.status==201) {
+  const data=response.data
+  setCaptain(data.captain)
+  localStorage.setItem('token',data.token)
+  console.log('Navigating to CaptainHome...');
+  navigate('/captain-Home')
+ } 
+   
+  
+  // setEmail('')
+  // setPassword('')
+  // setfirstname('')
+  // setlastname('')
   
 }
 
@@ -53,7 +79,7 @@ const submitHandler=(e)=>{
 
 
           <h3 className='text-lg font-medium mb-2'>name</h3>
-          <di className='flex gap-4'>
+          <div  className='flex gap-4'>
 
 
             <input
@@ -83,7 +109,7 @@ const submitHandler=(e)=>{
               
               type="text" required
               className='bg-[#eeeee] mb-7  w-1/2 rounded px-4 py-2 border  text-lg placeholder:text-base' />
-          </di>
+          </div>
 
           <h3 className='text-lg font-medium mb-2'>Whats Your Email</h3>
           <input
@@ -106,10 +132,105 @@ const submitHandler=(e)=>{
             
             
             className='bg-[#eeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base' type='password' required placeholder='password' />
+         
+         <h3 className='text-lg font-medium mb-2'>Vehicle</h3>
+          <div  className='flex gap-4'>
+
+
+            <input
+              placeholder='vehicle-color'
+            
+              type='text'
+              value={vehiclecolor}
+              onChange={(e)=>{
+                setvehiclecolor (e.target.value)
+              }}
+
+
+             
+              required
+              className='bg-[#eeeee] mb-7 w-1/2  rounded px-4 py-2 border  text-lg placeholder:text-base' />
+
+
+
+            <input
+              placeholder='vehicle-plate'
+              value={vehicleplate}
+              onChange={(e)=>{
+                  setvehicleplate(e.target.value)
+              }}
+            
+
+              
+              type="text" required
+              className='bg-[#eeeee] mb-7  w-1/2 rounded px-4 py-2 border  text-lg placeholder:text-base' />
+          </div>
+         
+          <div  className='flex gap-4'>
+
+
+<input
+  placeholder='vehicle-capecity'
+
+  type='text'
+  value={vehiclecapecity}
+  onChange={(e)=>{
+     setvehicapecity(e.target.value)
+  }}
+
+
+ 
+  required
+  className='bg-[#eeeee] mb-7 w-1/2  rounded px-4 py-2 border  text-lg placeholder:text-base' />
+
+
+
+<div style={{ display: 'inline-block', margin: '10px 0' }}>
+  <select
+    value={vehicletype}
+    onChange={(e) => {
+      setvehicletype(e.target.value);
+    }}
+    style={{
+      padding: '5px 10px',
+      fontSize: '14px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      backgroundColor: '#f9f9f9',
+      cursor: 'pointer',
+      width: '150px',
+      transition: 'all 0.3s ease',
+    }}
+    onMouseOver={(e) => (e.target.style.borderColor = '#007bff')}
+    onMouseOut={(e) => (e.target.style.borderColor = '#ccc')}
+    onFocus={(e) => {
+      e.target.style.outline = 'none';
+      e.target.style.borderColor = '#0056b3';
+      e.target.style.boxShadow = '0 0 5px rgba(0, 91, 179, 0.5)';
+    }}
+    onBlur={(e) => {
+      e.target.style.borderColor = '#ccc';
+      e.target.style.boxShadow = 'none';
+    }}
+  >
+    <option value="">Select vehicle type</option>
+    <option value="car">Car</option>
+    <option value="bike">Bike</option>
+    <option value="auto">Auto</option>
+  </select>
+</div>
+
+
+
+
+  
+
+</div>
+         
           <button
 
             className='bg-[#111] text-white   font-semibold mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base'
-          > Login</button>
+          > Create Account</button>
         </form>
       </div>
 
