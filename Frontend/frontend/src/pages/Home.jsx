@@ -3,7 +3,9 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import 'remixicon/fonts/remixicon.css'
 import LocationSearchPannel from '../components/LocationSearchPannel'
-
+import ComfirmRide from '../components/ConfirmRide'
+import LookingForDriver from '../components/LookingForDriver'
+import WaitingForDriver from '../components/WaitingForDriver'
 
 
 function Home() {
@@ -14,7 +16,14 @@ function Home() {
   const panelref = useRef(null)
   const panelcloseref = useRef(null)
   const VehiclepanelRef = useRef(null)
-  const [Vehiclepanl ,setVehiclepanel]=useState(false)
+  const [Vehiclepanl, setVehiclepanel] = useState(false)
+  const [RideOverView,setRideOverView]=useState(false)
+  const ConfirmRideRef=useRef(null)
+  const vehiclefoundRef=useRef(null)
+  
+  const[vehiclefound,setvehiclefound]=useState(false)
+  const[waitingForDriver,setwaitingForDriver]=useState(false)
+  const waitingForDriverRef=useRef(null)
 
 
 
@@ -42,21 +51,78 @@ function Home() {
 
 
 
-  useGSAP(()=>{
-    if(Vehiclepanl){
-      gsap.to(VehiclepanelRef.current,{
-        transform:'translateY(0)'
+  useGSAP(() => {
+    if (Vehiclepanl) {
+      gsap.to(VehiclepanelRef.current, {
+        transform: 'translateY(0)'
       })
     }
-    else{
-      gsap.to(VehiclepanelRef.current,{
-        transform:'translateY(100%)'
-        
+    else {
+      gsap.to(VehiclepanelRef.current, {
+        transform: 'translateY(100%)'
+
       })
 
     }
-   
-  },[Vehiclepanl])
+
+  }, [Vehiclepanl])
+
+
+
+  useGSAP(() => {
+    if (RideOverView) {
+      gsap.to(ConfirmRideRef.current, {
+        transform: 'translateY(0)'
+      })
+    }
+    else {
+      gsap.to(ConfirmRideRef.current, {
+        transform: 'translateY(100%)'
+
+      })
+
+    }
+
+  }, [RideOverView])
+
+
+
+
+  // for vehicle found
+
+  useGSAP(() => {
+    if (vehiclefound) {
+      gsap.to(vehiclefoundRef.current, {
+        transform: 'translateY(0)'
+      })
+    }
+    else {
+      gsap.to(vehiclefoundRef.current, {
+        transform: 'translateY(100%)'
+
+      })
+
+    }
+
+  }, [vehiclefound])
+
+  // gsap for waiting for driver
+  useGSAP(() => {
+    if (waitingForDriver) {
+      gsap.to(waitingForDriverRef.current, {
+        transform: 'translateY(0)'
+      })
+    }
+    else {
+      gsap.to(waitingForDriverRef.current, {
+        transform: 'translateY(100%)'
+
+      })
+
+    }
+
+  }, [waitingForDriver])
+
 
 
 
@@ -118,7 +184,7 @@ function Home() {
             </form>
           </div>
           <div ref={panelref} className=' h-0 bg-white-500 '>
-            <LocationSearchPannel  panelopen={panelopen} setpanelopen={setpanelopen} Vehiclepanl={Vehiclepanl} setVehiclepanel={setVehiclepanel}/>
+            <LocationSearchPannel panelopen={panelopen} setpanelopen={setpanelopen} Vehiclepanl={Vehiclepanl} setVehiclepanel={setVehiclepanel} />
           </div>
 
 
@@ -128,69 +194,102 @@ function Home() {
           <div ref={VehiclepanelRef} className="fixed w-full  mb-1 z-10 translate-y-full bottom-0 bg-white p-1">
 
 
-            <div  ref={VehiclepanelRef} >
+            <div ref={VehiclepanelRef}  >
 
-              <h5 onClick={()=>{
+              <h5 onClick={() => {
                 setVehiclepanel(false)
                 console.log(Vehiclepanl)
               }} className='p-2 flex justify-center'> <i className="ri-arrow-down-wide-fill"></i></h5>  </div>
-  <div className="flex items-center justify-between bg-white-500 p-2 rounded-lg shadow-lg border-black border-2">
-    <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
+            <div  onClick={() => {
+                setVehiclepanel(false)
+                console.log(Vehiclepanl)
+              }}
+               className="flex items-center justify-between bg-white-500 p-2 rounded-lg shadow-lg border-black border-2">
+              <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
 
-    <div className=" w-1/2 p-1 rounded-xl text-center">
-      <h4 className="text-black text-l font-semibold">
-        Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
-      </h4>
-      <h5 className="text-black text-m">2 mins away</h5>
-      <h3 className="text-black text-m">Affordable price</h3>
-    </div>
+              <div  onClick={()=>{
+                setRideOverView(true)
+              }}className=" w-1/2 p-1 rounded-xl text-center">
+                <h4  
+                
+                className="text-black text-l font-semibold">
+                  Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
+                </h4>
+                <h5 className="text-black text-m">2 mins away</h5>
+                <h3 className="text-black text-m">Affordable price</h3>
+              </div>
 
-    <h2 className="text-black text-m font-bold">$40</h2>
-  </div>
+              <h2 className="text-black text-m font-bold">$40</h2>
+            </div>
 
-  <div className="flex items-center justify-between bg-white-500 p-2 rounded-lg  mt-3  border-2 border-black ">
-    <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
+            <div className="flex items-center justify-between bg-white-500 p-2 rounded-lg  mt-3  border-2 border-black ">
+              <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
 
-    <div className=" w-1/2 p-1 rounded-xl text-center">
-      <h4 className="text-black text-l font-semibold">
-        Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
-      </h4>
-      <h5 className="text-black text-m">2 mins away</h5>
-      <h3 className="text-black text-m">Affordable price</h3>
-    </div>
+              <div className=" w-1/2 p-1 rounded-xl text-center">
+                <h4 className="text-black text-l font-semibold">
+                  Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
+                </h4>
+                <h5 className="text-black text-m">2 mins away</h5>
+                <h3 className="text-black text-m">Affordable price</h3>
+              </div>
 
-    <h2 className="text-black text-m font-bold">$40</h2>
-  </div>
+              <h2 className="text-black text-m font-bold">$40</h2>
+            </div>
 
-  <div className="flex items-center justify-between bg-white-500 p-2 rounded-lg shadow-lg  mt-3  border-2 border-black">
-    <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
+            <div className="flex items-center justify-between bg-white-500 p-2 rounded-lg shadow-lg  mt-3  border-2 border-black">
+              <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
 
-    <div className=" w-1/2 p-1 rounded-xl text-center">
-      <h4 className="text-black text-l font-semibold">
-        Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
-      </h4>
-      <h5 className="text-black text-m">2 mins away</h5>
-      <h3 className="text-black text-m">Affordable price</h3>
-    </div>
+              <div className=" w-1/2 p-1 rounded-xl text-center">
+                <h4 className="text-black text-l font-semibold">
+                  Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
+                </h4>
+                <h5 className="text-black text-m">2 mins away</h5>
+                <h3 className="text-black text-m">Affordable price</h3>
+              </div>
 
-    <h2 className="text-black text-m font-bold">$40</h2>
-  </div>
+              <h2 className="text-black text-m font-bold">$40</h2>
+            </div>
 
-  <div className="flex items-center justify-between bg-white-500 p-2 rounded-lg   mt-2 shadow-lg border-2 border-black">
-    <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
+            <div className="flex items-center justify-between bg-white-500 p-2 rounded-lg   mt-2 shadow-lg border-2 border-black">
+              <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
 
-    <div className=" w-1/2 p-1 rounded-xl text-center">
-      <h4 className="text-black text-l font-semibold">
-        Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
-      </h4>
-      <h5 className="text-black text-m">2 mins away</h5>
-      <h3 className="text-black text-m">Affordable price</h3>
-    </div>
+              <div className=" w-1/2 p-1 rounded-xl text-center">
+                <h4 className="text-black text-l font-semibold">
+                  Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
+                </h4>
+                <h5 className="text-black text-m">2 mins away</h5>
+                <h3 className="text-black text-m">Affordable price</h3>
+              </div>
 
-    <h2 className="text-black text-m font-bold">$40</h2>
-  </div>
-</div>
+              <h2 className="text-black text-m font-bold">$40</h2>
+            </div>
+          </div>
+        <div>
 
+
+
+
+        <div ref={ConfirmRideRef} className="fixed w-full  mb-1 z-10 translate-y-full bottom-0 bg-white p-12">
+
+
+        <ComfirmRide  setvehiclefound={setvehiclefound}/>
+        </div>
+
+
+        
+        <div ref={vehiclefoundRef} className="fixed w-full  mb-1 z-10 translate-y-full bottom-0 bg-white p-12">
+          <LookingForDriver/>
+
+        
+        </div>
+
+        <div  className="fixed w-full  mb-1 z-10 translate-y-full  bottom-0 bg-white p-12">
+          <WaitingForDriver  setwaitingForDriver={setwaitingForDriver}/>
+
+        
+        </div>
+       
+        </div>
 
 
 
@@ -201,10 +300,10 @@ function Home() {
 
 
         </div>
-        
-        
-        
-        </div>
+
+
+
+      </div>
     </div>
 
 

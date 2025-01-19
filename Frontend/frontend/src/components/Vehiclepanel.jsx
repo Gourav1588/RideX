@@ -7,14 +7,16 @@ function Vehiclepanel(props) {
 
       <div ref={props.VehiclepanelRef} >
 
-<h5 onClick={(props) => {
+<h5 onClick={() => {
   props.setVehiclepanel(false)
-  console.log(props.Vehiclepanl)
+
 }} className='p-2 flex justify-center'> <i className="ri-arrow-down-wide-fill"></i></h5>  </div>
 <div className="flex items-center justify-between bg-white-500 p-2 rounded-lg shadow-lg border-black border-2">
 <img className="h-10" src="https://www.uber-assets.com/image/upload/v1699622825/assets/26/12256b-fe40-4f78-b94c-d2ffdec56a23/original/UberBlack.png" alt="Uber Logo" />
 
-<div className=" w-1/2 p-1 rounded-xl text-center">
+<div   onClick={()=>{props.setConfirmRide(true)
+
+}}className=" w-1/2 p-1 rounded-xl text-center">
   <h4 className="text-black text-l font-semibold">
     Uber Go <span className="bg-white text-black text-m p-1 rounded-full"> <i class="ri-user-line"></i>  4</span>
   </h4>

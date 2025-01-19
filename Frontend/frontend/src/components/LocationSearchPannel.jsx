@@ -18,12 +18,10 @@ function LocationSearchPannel(props) {
       {locations.map((location, index) => (
         <div key={index}    
         
-        
         onClick={()=>{
           props.setVehiclepanel(true)
-          
-          
         }}
+    
         
         className="flex items-center gap-4 p-3 mb-3 bg-white rounded-md shadow hover:bg-gray-50 transition">
           <h4 className="flex items-center justify-center w-12 h-12 bg-gray-200 text-gray-600 rounded-full">
