@@ -7,7 +7,7 @@ function WaitingForDriver() {
 props.setVehiclepanel(false)
 
 }} className='p-2 flex justify-center'> <i className="ri-arrow-down-wide-fill"></i></h5>  */}
-    
+    <h3 className='text-3xl font-semibold mb-5'> Looking for Driver1 </h3>
 
     <div className='flex items-center justify-between '>
       <img className='h-20 -ml-10' src="https://www.uber-assets.com/image/upload/v1646663215/assets/6e/e50c1b-2174-4c97-83a1-bfd4544689d0/original/uberX.png" alt="" />

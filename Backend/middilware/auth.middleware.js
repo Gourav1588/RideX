@@ -33,7 +33,7 @@ module.exports.authuser = async (req, res, next) => {
         next();
     } catch (err) {
         console.error(err.message); // Log the error for debugging
-        return res.status(401).json({ message: "Unauthorized access", error: err.message });
+        return res.status(401).json({ message: "Unauthorized1 access", error: err.message });
     }
 }
 module.exports.authcaptain=async(req,res,next)=>{

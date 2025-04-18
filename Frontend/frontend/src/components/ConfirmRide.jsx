@@ -53,7 +53,7 @@ function ConfirmRide(props) {
         <div className='flex items-center gap-5 mb-2 p-3 border-b-2'>
           <div>
 
-          <i class="ri-money-dollar-circle-fill"></i>
+          <i classname="ri-money-dollar-circle-fill"></i>
 
           </div>
           <div>
