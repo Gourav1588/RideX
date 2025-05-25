@@ -10,7 +10,7 @@ const UserSignup =  () => {
   const[password,setPassword]=useState('')
   const [firstname,setfirstname]=useState('')
   const [lastname,setlastname]=useState('')
-  const [userdata,setuserdata]=useState()
+
   const navigate = useNavigate();
 
 
@@ -39,6 +39,8 @@ const newuser={
   if(response.status==201){
     const data=response.data
     setuser(data.user)
+    console.log ( "user statment",user)
+    console.log(u)
     localStorage.setItem('token',data.token)
     navigate('/Home')
 

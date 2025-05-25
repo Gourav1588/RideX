@@ -25,14 +25,24 @@ const captainSchema = mongoose.Schema({
     required: true,
     select: false,
   },
-  soketid: {
+  socketId: {
     type: String,
+    default: null
   },
   status: {
     type: String,
     enum: ['active', 'inactive'],
     default: 'inactive',
   },
+   location: {
+        ltd: {
+            type: Number,
+        },
+        lng: {
+            type: Number,
+        }
+    },
+ 
   vehicle: {
     color: {
       type: String,
@@ -54,35 +64,26 @@ const captainSchema = mongoose.Schema({
       required: true,
       enum: ['car', 'bike', 'auto'],
     },
-  },
-  location: {
-    lat: { type: Number },
-    lng: { type: Number },
-  },
+  }
 });
+
+
 
 captainSchema.methods.generateToken = function () {
   return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 };
 
 captainSchema.statics.hashPassword = async function (password) {
-    return await bcrypt.hash(password, 10);
-  };
-//   captainSchema.methods.comparePassword=async (password)=> {
-// return await bcrypt.compare(password,this.password)
+  return await bcrypt.hash(password, 10);
+};
 
-    
-//   }
-
-  captainSchema.methods.comparePassword = async function (password) {
-    try {
-        // Compare the provided password with the stored hashed password
-        const isMatch = await bcrypt.compare(password, this.password);
-        return isMatch; // Return the result of the comparison (true/false)
-    } catch (err) {
-        // Handle potential errors (e.g., if bcrypt fails)
-        throw new Error('Error comparing passwords');
-    }
+captainSchema.methods.comparePassword = async function (password) {
+  try {
+    const isMatch = await bcrypt.compare(password, this.password);
+    return isMatch;
+  } catch (err) {
+    throw new Error('Error comparing passwords');
+  }
 };
 
 const CaptainModel = mongoose.model('Captain', captainSchema);

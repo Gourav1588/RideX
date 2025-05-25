@@ -1,6 +1,23 @@
 import React from 'react'
+import carImage from '../assets/ubercar.webp'
+import autoImage from '../assets/uberauto.webp'
+import bikeImage from '../assets/uberbike.webp'
 
 function ConfirmRide(props) {
+  const getVehicleImage = () => {
+    const type = props.vehicleType?.toLowerCase();
+    switch(type) {
+      case 'car':
+        return carImage;
+      case 'auto':
+        return autoImage;
+      case 'bike':
+        return bikeImage;
+      default:
+        return carImage;
+    }
+  }
+
   return (
     <div>
       {/* <h5 onClick={() => {
@@ -10,7 +27,7 @@ function ConfirmRide(props) {
       <h3 className='text-3xl font-semibold mb-5'> confirm your ride </h3>
 
       <div className='flex  gap-2 flex-col justify-between items-center'>
-        <img className='h-20' src="https://www.uber-assets.com/image/upload/v1646663215/assets/6e/e50c1b-2174-4c97-83a1-bfd4544689d0/original/uberX.png" alt="" />
+        <img className='h-20' src={getVehicleImage()} alt={`${props.vehicleType || 'Vehicle'} image`} />
 
       </div>
       <div className='w-full mt-5'>
@@ -20,9 +37,8 @@ function ConfirmRide(props) {
             <i className="  text-lh ri-map-pin-2-line"></i>
 
           </div>
-          <div>
-            <h3 className='text-lg font-medium'> 414/1-A</h3>
-            <p className=' text-sm -mt-1 text-gray-600'> near krishna bekary</p>
+          <div>            <h3 className='text-lg font-medium'>Pickup Location</h3>
+            <p className=' text-sm -mt-1 text-gray-600'>{props.from}</p>
           </div>
 
 
@@ -38,8 +54,8 @@ function ConfirmRide(props) {
 
           </div>
           <div>
-            <h3 className='text-lg font-medium'> 414/1-A</h3>
-            <p className=' text-sm -mt-1 text-gray-600'> near krishna bekary</p>
+            <h3 className='text-lg font-medium'>Drop Location</h3>
+            <p className=' text-sm -mt-1 text-gray-600'>{props.destination}</p>
           </div>
 
 
@@ -51,25 +67,23 @@ function ConfirmRide(props) {
         <div>
 
         <div className='flex items-center gap-5 mb-2 p-3 border-b-2'>
-          <div>
-
-          <i classname="ri-money-dollar-circle-fill"></i>
+          <div>          <i className="ri-money-dollar-circle-fill text-xl"></i>
 
           </div>
           <div>
-            <h3 className='text-lg font-medium'> 414/1-A</h3>
-            <p className=' text-sm -mt-1 text-gray-600'> near krishna bekary</p>
+            <h3 className='text-lg font-medium'>Fare Amount</h3>
+            <p className='text-sm -mt-1 text-gray-600'>₹{props.fare || '--'}</p>
           </div>
 
 
         </div>
         </div>
-      </div>
-      <button  onClick={()=>{
-
-        props.setvehiclefound(true)
-      }} className='w-full bg-green-600 text-white font-semibold p-2 rounded-lg'>
-        confirm
+      </div>      <button onClick={async () => {
+          await props.createRide();
+          props.setRideOverView(false);
+          props.setvehiclefound(true);
+      }} className='w-full bg-green-600 text-white font-semibold p-2 rounded-lg hover:bg-green-700 transition-colors'>
+        Confirm Booking
       </button>
 
 

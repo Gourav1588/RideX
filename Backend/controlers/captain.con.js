@@ -67,6 +67,7 @@ const token =captain.generateToken ();
 
 module.exports.getprofile=async(req,res,next)=>{
     res.status(200).json(req.captain)
+
 }
 
 

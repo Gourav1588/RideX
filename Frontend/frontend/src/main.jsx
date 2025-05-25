@@ -5,14 +5,16 @@ import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import Context from './context/Context.jsx';
 import CaptainContext from './context/CaptainContext.jsx';
+import  SocketProvider  from './context/SocketContext.jsx';
 createRoot(document.getElementById('root')).render(
   
-    <BrowserRouter>
-      <CaptainContext>
-        <Context>
+  <CaptainContext>
+    <Context>
+      <SocketProvider>
+        <BrowserRouter>
           <App />
-        </Context>
-      </CaptainContext>
-    </BrowserRouter>
-  
+        </BrowserRouter>
+      </SocketProvider>
+    </Context>
+  </CaptainContext>
 );

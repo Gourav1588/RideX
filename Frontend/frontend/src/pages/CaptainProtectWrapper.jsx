@@ -23,7 +23,9 @@ const CaptainProtectWrapper = ({ children }) => {
     })
     .then(response => {
       if (response.status === 200) {
-        setCaptain(response.data.captain);  // Set the user data
+        setCaptain(response.data);  // Set the user data
+        
+        console.log('Captain profile fetched successfully:', response.data);
         navigate('/captain-Home');
       }
     })

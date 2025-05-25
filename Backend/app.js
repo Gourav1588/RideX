@@ -10,12 +10,16 @@ app.use(express.json());
 const userRoute = require("./routes/user.routes");
 const captainroutes = require("./routes/captain.routes");
 const mapRoutes = require("./routes/maps.routes");
+const rideroutes=require("./routes/ride.routes")
+
 const cookieParser = require("cookie-parser");
 
 app.use(cookieParser());
 app.use("/users", userRoute);
 app.use("/captains", captainroutes);
 app.use("/maps", mapRoutes);
+app.use("/ride",rideroutes)
+
 require('dotenv').config();  // This loads the .env file
 
 const mongoose = require('mongoose');
@@ -29,14 +33,6 @@ mongoose.connect(process.env.MONGO_URI)
 // Test route
 app.get("/", (req, res) => {
   res.send("hello");
-});
-
-// The `app.listen` part that starts the server
-const PORT = process.env.PORT || 4000;
-console.log("ENV PORT:", process.env.PORT);
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
 
 module.exports = app;

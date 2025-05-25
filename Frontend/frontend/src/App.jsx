@@ -42,8 +42,10 @@ const App = () => {
 
   
   <Route path='/Home' element={
+    <UserProtectWrapper>
     
       <Home/>
+    </UserProtectWrapper>
     
 
     }/>
